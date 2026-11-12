@@ -1,0 +1,397 @@
+ 
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Birthday – Taniya Ali 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            width: 100vw;
+            height: 100vh
+        }
+
+        canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0
+        }
+
+        .ui {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2px;
+            margin-bottom: 6px
+        }
+
+        .hl {
+            display: inline-block;
+            color: transparent;
+            background: linear-gradient(180deg, #fff 0%, #ffb3d1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(0 0 8px rgba(255, 80, 150, .8));
+            animation: hDrop .7s cubic-bezier(.34, 1.9, .64, 1) both, hWave 3s ease-in-out infinite
+        }
+
+        @keyframes hDrop {
+            from {
+                opacity: 0;
+                transform: translateY(-60px) scale(1.5);
+                filter: blur(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0) drop-shadow(0 0 8px rgba(255, 80, 150, .8))
+            }
+        }
+
+        @keyframes hWave {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-6px)
+            }
+        }
+
+        .sub-wrap {
+            margin: 14px 0 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .sub-line {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 180, 220, .5));
+            border-radius: 2px
+        }
+
+        .sub-line.r {
+            background: linear-gradient(90deg, rgba(255, 180, 220, .5), transparent)
+        }
+
+        .sub {
+            display: flex;
+            gap: 1px;
+            align-items: center
+        }
+
+        .sl {
+            display: inline-block;
+            font-size: 1rem;
+            font-style: italic;
+            letter-spacing: 1px;
+            animation: slWave 2.5s ease-in-out infinite, slFadeIn .5s ease both
+        }
+
+        @keyframes slFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes slWave {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                color: #ff80c0;
+                text-shadow: 0 0 10px #ff0080, 0 0 20px #ff0080
+            }
+
+            25% {
+                transform: translateY(-5px);
+                color: #ff40ff;
+                text-shadow: 0 0 10px #cc00ff, 0 0 25px #cc00ff
+            }
+
+            50% {
+                transform: translateY(-8px);
+                color: #ffd700;
+                text-shadow: 0 0 10px #ffaa00, 0 0 25px #ffaa00
+            }
+
+            75% {
+                transform: translateY(-4px);
+                color: #ff80ff;
+                text-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc
+            }
+        }
+
+        .name {
+            font-size: 2.4rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin: 14px 0 8px;
+            background: linear-gradient(135deg, #ff80d0, #ffffff, #ffd700, #ffffff, #ff80d0);
+            background-size: 250%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: nameIn 1.2s cubic-bezier(.34, 2, .64, 1) both, nameShine 4s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 100, 180, .6))
+        }
+
+        @keyframes nameIn {
+            from {
+                opacity: 0;
+                transform: scale(0) rotate(-15deg)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0)
+            }
+        }
+
+        @keyframes nameShine {
+            0% {
+                background-position: 0%
+            }
+
+            100% {
+                background-position: 250%
+            }
+        }
+
+        .msg {
+            font-size: .85rem;
+            color: rgba(255, 220, 235, .8);
+            text-align: center;
+            line-height: 2;
+            margin: 4px 0 12px;
+            max-width: 300px
+        }
+
+        .ml {
+            display: block;
+            opacity: 0;
+            animation: mlIn .8s ease forwards
+        }
+
+        @keyframes mlIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0)
+            }
+        }
+
+        .badge {
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-size: .88rem;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: bIn .8s cubic-bezier(.34, 1.56, .64, 1) both, bPulse 2.5s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 20, 100, .12), rgba(255, 0, 80, .05));
+            border: 1px solid rgba(255, 60, 120, .7);
+            color: #ffaad0
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 100, 180, .15), transparent);
+            transform: translateX(-100%);
+            animation: badgeSweep 2.5s ease-in-out infinite
+        }
+
+        @keyframes badgeSweep {
+
+            0%,
+            100% {
+                transform: translateX(-100%)
+            }
+
+            50% {
+                transform: translateX(100%)
+            }
+        }
+
+        @keyframes bIn {
+            from {
+                opacity: 0;
+                transform: scale(0)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        @keyframes bPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 0, 80, .3)
+            }
+
+            50% {
+                box-shadow: 0 0 50px rgba(255, 0, 100, .7), 0 0 90px rgba(255, 0, 80, .2)
+            }
+        }
+
+        .date {
+            margin-top: 10px;
+            font-size: .95rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #ffd700;
+            opacity: 0;
+            animation: dIn .8s ease both, dFloat 3s ease-in-out infinite;
+            text-shadow: 0 0 15px #ffd700, 0 0 40px rgba(255, 180, 0, .5)
+        }
+
+        @keyframes dIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes dFloat {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-5px)
+            }
+        }
+
+        .made-by {
+            position: fixed;
+            bottom: 12px;
+            right: 14px;
+            font-size: .6rem;
+            color: rgba(255, 255, 255, .18);
+            letter-spacing: 2px;
+            z-index: 20
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+    <div class="ui">
+        <h1 id="h1"></h1>
+        <div class="sub-wrap">
+            <div class="sub-line"></div>
+            <div class="sub" id="sub"></div>
+            <div class="sub-line r"></div>
+        </div>
+        <div class="name" id="name" style="opacity:0">🌸 Taniya Ali 🌸</div>
+        <p class="msg">
+            <span class="ml" style="animation-delay:3s">Tumhara yeh din bahut khaas ho,</span>
+            <span class="ml" style="animation-delay:3.5s">jaise tum khud khaas ho hamare liye 💕</span>
+        </p>
+        <div class="badge" style="animation-delay:4s">✨ Dil Se Birthday Mubarak ✨</div>
+        <div class="date" style="animation-delay:4.6s">🎂 4 December 2026 🎂</div>
+    </div>
+    <div class="made-by">made by Akram</div>
+    <script>
+        const h1El = document.getElementById('h1');
+        [...'Happy Birthday'].forEach((ch, i) => {
+            const sp = document.createElement('span');
+            sp.className = 'hl';
+            sp.textContent = ch === ' ' ? '\u00a0' : ch;
+            sp.style.animationDelay = `${i * 0.06}s,${i * 0.06 + 0.8}s`;
+            h1El.appendChild(sp);
+        });
+        const subEl = document.getElementById('sub');
+        [...'— Dil Ki Gehraiyoon Se —'].forEach((ch, i) => {
+            const sp = document.createElement('span');
+            sp.className = 'sl';
+            sp.textContent = ch === ' ' ? '\u00a0' : ch;
+            sp.style.animationDelay = `${i * 0.07 + 1.5}s,${i * 0.07 + 1.5}s`;
+            subEl.appendChild(sp);
+        });
+        setTimeout(() => { document.getElementById('name').style.animation = 'nameIn 1.2s cubic-bezier(.34,2,.64,1) forwards,nameShine 4s linear 1.2s infinite' }, 2400);
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+        let W, H, cx, cy;
+        function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; cx = W / 2; cy = H / 2; buildHeart() }
+        const nebulas = Array.from({ length: 5 }, (_, i) => ({ x: Math.random() * 1200, y: Math.random() * 800, r: 150 + Math.random() * 200, hue: 300 + i * 25, phase: Math.random() * Math.PI * 2, speed: 0.003 + Math.random() * 0.004, vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3 }));
+        const bgStars = Array.from({ length: 200 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.5, alpha: Math.random(), speed: 0.005 + Math.random() * 0.02 }));
+        let heartParticles = [];
+        function hx(t) { return 16 * Math.pow(Math.sin(t), 3) }
+        function hy(t) { return -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) }
+        function buildHeart() { const sc = Math.min(W, H) / 42; heartParticles = Array.from({ length: 250 }, () => { const t = Math.random() * Math.PI * 2; return { x: Math.random() * W, y: Math.random() * H, tx: hx(t) * sc + cx, ty: hy(t) * sc + cy, vx: 0, vy: 0, r: 1.4 + Math.random() * 2.4, hue: 320 + Math.random() * 50, alpha: 0, phase: Math.random() * Math.PI * 2, spd: 0.025 + Math.random() * 0.04 } }) }
+        const shoots = [];
+        setInterval(() => shoots.push({ x: Math.random() * W * .6, y: Math.random() * H * .4, vx: 4 + Math.random() * 6, vy: 1.5 + Math.random() * 2.5, alpha: 1 }), 1000);
+        const fws = [];
+        setInterval(() => { const fx = W * (.2 + Math.random() * .6), fy = H * (.05 + Math.random() * .4); for (let i = 0; i < 50; i++) { const a = Math.random() * Math.PI * 2, s = 1 + Math.random() * 5.5; fws.push({ x: fx, y: fy, vx: Math.cos(a) * s, vy: Math.sin(a) * s, alpha: 1, r: 1.5 + Math.random() * 3, hue: 280 + Math.random() * 120 }) } }, 1100);
+        const rHearts = [];
+        const hEmoji = ['💖', '💗', '💕', '❤️', '💓', '💝', '🌹'];
+        setInterval(() => rHearts.push({ x: Math.random() * W, y: H + 20, vy: -(1.2 + Math.random() * 1.8), vx: (Math.random() - .5) * .8, alpha: 1, size: .8 + Math.random() * .8, e: hEmoji[Math.floor(Math.random() * hEmoji.length)] }), 500);
+        let frame = 0;
+        function draw() {
+            ctx.fillStyle = 'rgba(0,0,2,0.14)'; ctx.fillRect(0, 0, W, H);
+            nebulas.forEach(n => { n.phase += n.speed; n.x += n.vx; n.y += n.vy; if (n.x < -n.r) n.x = W + n.r; if (n.x > W + n.r) n.x = -n.r; if (n.y < -n.r) n.y = H + n.r; if (n.y > H + n.r) n.y = -n.r; const pr = n.r * (1 + .15 * Math.sin(n.phase)); const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, pr); const a = (.06 + .03 * Math.sin(n.phase)).toFixed(3); g.addColorStop(0, `hsla(${n.hue},100%,65%,${a})`); g.addColorStop(.5, `hsla(${n.hue + 20},100%,50%,${(a * .4).toFixed(3)})`); g.addColorStop(1, `hsla(${n.hue},100%,40%,0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(n.x, n.y, pr, 0, Math.PI * 2); ctx.fill(); n.hue += .2 });
+            bgStars.forEach(s => { s.alpha += s.speed * (Math.sin(frame * s.speed) > 0 ? 1 : -1); s.alpha = Math.max(.1, Math.min(1, s.alpha)); ctx.globalAlpha = s.alpha; ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill() });
+            for (let i = shoots.length - 1; i >= 0; i--) { const s = shoots[i]; ctx.save(); ctx.globalAlpha = s.alpha; const g = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * 14, s.y - s.vy * 14); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(1, 'rgba(255,160,220,0)'); ctx.strokeStyle = g; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 14, s.y - s.vy * 14); ctx.stroke(); ctx.restore(); s.x += s.vx; s.y += s.vy; s.alpha -= .022; if (s.alpha <= 0) shoots.splice(i, 1) }
+            heartParticles.forEach(p => { p.phase += p.spd; const dx = p.tx - p.x, dy = p.ty - p.y; p.vx += dx * .04; p.vy += dy * .04; p.vx *= .88; p.vy *= .88; p.x += p.vx; p.y += p.vy; p.alpha = Math.min(1, p.alpha + .012); const pulse = 1 + .3 * Math.sin(p.phase + frame * .02); const h = (p.hue + frame * .3) % 360; ctx.globalAlpha = p.alpha * .9; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * pulse, 0, Math.PI * 2); ctx.fillStyle = `hsl(${h},100%,65%)`; ctx.fill(); ctx.globalAlpha = p.alpha * .12; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * pulse * 5, 0, Math.PI * 2); ctx.fill() });
+            for (let i = fws.length - 1; i >= 0; i--) { const fw = fws[i]; fw.x += fw.vx; fw.y += fw.vy; fw.vy += .09; fw.alpha -= .015; if (fw.alpha <= 0) { fws.splice(i, 1); continue } ctx.globalAlpha = fw.alpha; ctx.beginPath(); ctx.arc(fw.x, fw.y, fw.r, 0, Math.PI * 2); ctx.fillStyle = `hsl(${fw.hue},100%,70%)`; ctx.fill() }
+            for (let i = rHearts.length - 1; i >= 0; i--) { const h = rHearts[i]; h.x += h.vx; h.y += h.vy; h.alpha -= .008; if (h.alpha <= 0 || h.y < -30) { rHearts.splice(i, 1); continue } ctx.globalAlpha = h.alpha; ctx.font = `${h.size * 22}px serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(h.e, h.x, h.y) }
+            ctx.globalAlpha = 1; frame++; requestAnimationFrame(draw);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+        draw();
+    </script>
+</body>
+
+</html>
